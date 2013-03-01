@@ -1,0 +1,3 @@
+module Ender
+  VERSION = "0.0.1"
+end
