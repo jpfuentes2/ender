@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
     "*.gemspec",
     "test/*.*"
   ]
+
+  s.executables << "ender"
   s.require_paths = %w{lib}
 
   s.add_dependency "net-ssh-multi"
