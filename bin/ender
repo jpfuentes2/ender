@@ -1,3 +1,11 @@
 #!/usr/bin/env ruby
 
 require "ender"
+require "clap"
+
+options = { config_file: nil }
+
+Clap.run ARGV,
+  "-c"  => ->(f) { options[:config_file] = f }
+
+Ender.cli options
