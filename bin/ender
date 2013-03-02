@@ -3,7 +3,7 @@
 require "ender"
 require "clap"
 
-options = { config_file: nil }
+options = { }
 
 Clap.run ARGV,
   "-c"  => ->(f) { options[:config_file] = f }

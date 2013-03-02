@@ -13,8 +13,9 @@ Type exit if you wish to surrender.
 ".freeze
 
   def cli(options = {})
-    config_file = options.fetch :config_file, self.config_file
-    proc = Proc.new { eval File.read(config_file), proc.binding }
+    cfg = options.fetch(:config_file) { self.config_file }
+    abort "Config file: #{cfg} not found!" unless File.exists?(cfg)
+    proc = Proc.new { eval File.read(cfg), proc.binding }
     configure &proc
 
     prompt
