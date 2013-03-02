@@ -77,9 +77,9 @@ Type exit if you wish to surrender.
   end
 
   def group(targets)
-    ss = session.with *targets.map(&:to_sym)
-    puts "No servers found for group(s): #{targets.join(",")}" if ss.servers.empty?
-    ss
+    sess = session.with *targets.map(&:to_sym)
+    puts "No servers found for group(s): #{targets.join(",")}" if sess.servers.empty?
+    sess
   end
 
   def cherry_pick(targets)
