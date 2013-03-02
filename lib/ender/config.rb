@@ -32,6 +32,8 @@ module Ender
       else
         abort "Really? Pick a *real* editing mode! :vi or :emacs"
       end
+    rescue NotImplementedError
+      abort "Readline #{mode} editing mode not supported. Try the advice found here: http://bit.ly/WzD1YC."
     end
 
     def server(options = {})
