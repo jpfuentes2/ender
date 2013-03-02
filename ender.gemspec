@@ -24,5 +24,6 @@ Gem::Specification.new do |s|
   s.executables << "ender"
   s.require_paths = %w{lib}
 
-  s.add_dependency "net-ssh-multi"
+  s.add_dependency "net-ssh-multi", "~> 1.0"
+  s.add_dependency "clap", "~> 1.0"
 end
