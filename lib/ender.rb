@@ -8,10 +8,9 @@ module Ender
   include Config
   extend self
 
-  INTRO = <<-ENDER
-Welcome, Ender, to your command center.
+  INTRO = "Welcome, Ender, to your command center.
 Type exit if you wish to surrender.
-  ENDER
+".freeze
 
   def cli(options = {})
     config_file = options.fetch :config_file, self.config_file
@@ -22,10 +21,12 @@ Type exit if you wish to surrender.
   end
 
   def prompt
-    Signal.trap(:SIGINT) { puts "exit"; exit }
-    Signal.trap(:SIGTERM) { puts "exit"; exit }
-    Signal.trap(:SIGQUIT) { puts "exit"; exit }
+    exit = -> { puts "exit"; exit }
+    Signal.trap :SIGINT, &exit
+    Signal.trap :SIGTERM, &exit
+    Signal.trap :SIGQUIT, &exit
     at_exit { shutdown! }
+
     puts INTRO
     start_prompt
   end
