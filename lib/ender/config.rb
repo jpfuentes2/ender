@@ -21,7 +21,7 @@ module Ender
     end
 
     def default_user(name = nil)
-      name.nil? ? @default_user : (@default_user = name)
+      @default_user = name
     end
 
     def edit_mode(mode)
