@@ -1,6 +1,7 @@
 require "net/ssh/multi"
 require "readline"
 require "ender/config"
+require "ender/version"
 
 $stdout.sync = true
 

@@ -6,6 +6,18 @@ require "clap"
 options = { }
 
 Clap.run ARGV,
-  "-c"  => ->(f) { options[:config_file] = f }
+  "-c"  => ->(f) { options[:config_file] = f },
+  "-h" => -> {
+    puts <<-HELP
+Usage: ender [<args>]
+
+  Options:
+      -c          # Config file path. Default: ./config/ender.rb
+      -h          # Help
+      -v          # Display version
+HELP
+    exit
+  },
+  "-v" => -> { puts Ender::VERSION; exit }
 
 Ender.cli options
