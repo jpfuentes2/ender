@@ -10,6 +10,8 @@ rescue NotImplementedError
   mode = nil
 end
 
+# mode = nil # Remove this line if you don't want advanced editing mode.  Don't do it, seriously, go learn vi or emacs!
+
 Ender.configure do
   # define our servers here
   server host: "127.0.0.1", group: :lo
