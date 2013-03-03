@@ -37,8 +37,8 @@ module Ender
     end
 
     def server(options = {})
-      user = options.fetch(:user, default_user)
-      host = options.delete(:host) || abort("Must provide :host for server")
+      user = options.fetch :user, default_user
+      host = options.delete :host || abort("Must provide :host for server")
       groups = Array(options.delete(:group)).map &:to_sym
 
       server = session.use host, options

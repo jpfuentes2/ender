@@ -14,8 +14,8 @@ Type exit if you wish to surrender.
 ".freeze
 
   def cli(options = {})
-    cfg = options.fetch(:config_file) { self.config_file }
-    abort "Config file: #{cfg} not found!" unless File.exists?(cfg)
+    cfg = options.fetch :config_file, self.config_file
+    abort "Config file: #{cfg} not found!" unless File.exists? cfg
     proc = Proc.new { eval File.read(cfg), proc.binding }
     configure &proc
 
@@ -35,22 +35,25 @@ Type exit if you wish to surrender.
 
   private
 
+  def execute(buffer, hosts, sub_session)
+    cmd = buffer.sub FILTERED_HOST_REGEX, ""
+    puts "Executing '#{cmd}' on #{hosts.join(",")}"
+    sub_session.exec cmd
+    session.loop
+  end
+
   def session
     @session ||= Net::SSH::Multi.start
   end
 
   def start_prompt
     while buffer = Readline.readline("> ", true)
-      abort if buffer.nil? || buffer == "exit" || buffer == "quit"
+      abort if buffer.nil? || buffer =~ /^(quit|exit)/
 
       sub_session, hosts = filter *parse_options(buffer)
       next if hosts.empty?
 
-      cmd = buffer.sub FILTERED_HOST_REGEX, ""
-      puts "Executing '#{cmd}' on #{hosts.join(",")}"
-
-      sub_session.exec cmd
-      session.loop
+      execute buffer, hosts, sub_session
     end
   end
 
@@ -85,7 +88,7 @@ Type exit if you wish to surrender.
   end
 
   def cherry_pick(targets)
-    servers = session.servers.select { |s| targets.include?(s.host) }
+    servers = session.servers.select { |s| targets.include? s.host }
     puts "Servers #{targets.join(",")} have not been configured." if servers.empty?
     session.on *servers
   end
