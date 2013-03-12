@@ -1,9 +1,13 @@
+# encoding: utf-8
+
 require "net/ssh/multi"
 require "readline"
 require "ender/config"
 require "ender/version"
 
 $stdout.sync = true
+
+alias :λ :lambda # let's have fun when coding
 
 module Ender
   include Config
@@ -23,7 +27,7 @@ Type exit if you wish to surrender.
   end
 
   def prompt
-    exit = -> { puts "exit"; exit }
+    exit = λ { puts "exit"; exit }
     Signal.trap :SIGINT, &exit
     Signal.trap :SIGTERM, &exit
     Signal.trap :SIGQUIT, &exit

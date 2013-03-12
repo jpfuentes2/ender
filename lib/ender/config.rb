@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Ender
   module Config
     extend self
@@ -13,7 +15,7 @@ module Ender
 
       completion_list = %w(on group) + session.groups.keys + session.servers.map(&:host)
 
-      Readline.completion_proc = Proc.new do |str|
+      Readline.completion_proc = λ do |str|
         completion_list.grep /^#{Regexp.escape(str)}/
       end
 

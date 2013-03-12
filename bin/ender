@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
 
 require "ender"
 require "clap"
@@ -6,8 +7,8 @@ require "clap"
 options = { }
 
 Clap.run ARGV,
-  "-c"  => ->(f) { options[:config_file] = f },
-  "-h" => -> {
+  "-c"  => λ { |f| options[:config_file] = f },
+  "-h" => λ {
     puts <<-HELP
 Usage: ender [<args>]
 
@@ -18,6 +19,6 @@ Usage: ender [<args>]
 HELP
     exit
   },
-  "-v" => -> { puts Ender::VERSION; exit }
+  "-v" => λ { puts Ender::VERSION; exit }
 
 Ender.cli options
