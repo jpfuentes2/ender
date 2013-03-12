@@ -5,7 +5,7 @@ module Ender
     Readline.completion_append_character = " "
 
     def config_file
-      File.join Dir.pwd, "config", "ender.rb"
+      File.join Dir.pwd, ".ender"
     end
 
     def configure(&blk)

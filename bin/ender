@@ -12,7 +12,7 @@ Clap.run ARGV,
 Usage: ender [<args>]
 
   Options:
-      -c          # Config file path. Default: ./config/ender.rb
+      -c          # Config file path. Default: ./.ender
       -h          # Help
       -v          # Display version
 HELP
