@@ -4,6 +4,8 @@ module Ender
   module Config
     extend self
 
+    EDIT_MODES = [:vi, :emacs]
+
     Readline.completion_append_character = " "
 
     def config_file
@@ -27,15 +29,10 @@ module Ender
     end
 
     def edit_mode(mode)
-      if mode == :vi
-        Readline.vi_editing_mode
-      elsif mode == :emacs
-        Readline.emacs_editing_mode
-      else
-        abort "Really? Pick a *real* editing mode! :vi or :emacs"
-      end
+      abort "Really? Pick a *real* editing mode! :vi or :emacs" unless mode?(mode)
+      Readline.public_send "#{mode}_editing_mode?"
     rescue NotImplementedError
-      abort "Readline #{mode} editing mode not supported. Try the advice found here: http://bit.ly/WzD1YC."
+      abort "Readline #{mode} editing mode not supported. Try this: http://bit.ly/WzD1YC"
     end
 
     def server(options = {})
@@ -47,6 +44,12 @@ module Ender
       session.group groups => server unless groups.empty?
 
       nil
+    end
+
+    private
+
+    def mode?(mode)
+      EDIT_MODES.include? mode.to_sym
     end
 
   end
