@@ -20,8 +20,6 @@ module Ender
       Readline.completion_proc = λ do |str|
         completion_list.grep /^#{Regexp.escape(str)}/
       end
-
-      self
     end
 
     def default_user(name = nil)
@@ -42,8 +40,6 @@ module Ender
 
       server = session.use host, options
       session.group groups => server unless groups.empty?
-
-      nil
     end
 
     private

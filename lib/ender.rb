@@ -20,9 +20,7 @@ Type exit if you wish to surrender.
   def cli(options = {})
     cfg = options.fetch :config_file, self.config_file
     abort "Config file: #{cfg} not found!" unless File.exists? cfg
-    proc = Proc.new { eval File.read(cfg), proc.binding }
-    configure &proc
-
+    configure { eval File.read(cfg) }
     prompt
   end
 
