@@ -25,11 +25,11 @@ Type exit if you wish to surrender.
   end
 
   def prompt
-    exit = λ { puts "exit"; exit }
-    Signal.trap :SIGINT, &exit
-    Signal.trap :SIGTERM, &exit
-    Signal.trap :SIGQUIT, &exit
-    at_exit { shutdown! }
+    shutdown = λ { abort "Ender out..."; session.close; exit }
+    Signal.trap :SIGINT, &shutdown
+    Signal.trap :SIGTERM, &shutdown
+    Signal.trap :SIGQUIT, &shutdown
+    at_exit { shutdown[] }
 
     puts INTRO
     start_prompt
@@ -93,10 +93,5 @@ Type exit if you wish to surrender.
     servers = session.servers.select { |s| targets.include? s.host }
     puts "Servers #{targets.join(",")} have not been configured." if servers.empty?
     session.on *servers
-  end
-
-  def shutdown!
-    puts "Ender out..."
-    session.close
   end
 end
