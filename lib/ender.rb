@@ -25,11 +25,10 @@ Type exit if you wish to surrender.
   end
 
   def prompt
-    shutdown = λ { abort "Ender out..."; session.close; exit }
-    Signal.trap :SIGINT, &shutdown
-    Signal.trap :SIGTERM, &shutdown
-    Signal.trap :SIGQUIT, &shutdown
-    at_exit { shutdown[] }
+    Signal.trap :SIGINT, method(:at_exit)
+    Signal.trap :SIGTERM, method(:at_exit)
+    Signal.trap :SIGQUIT, method(:at_exit)
+    at_exit { abort "Ender out..."; session.close; exit }
 
     puts INTRO
     start_prompt
